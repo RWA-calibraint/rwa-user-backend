@@ -1,0 +1,181 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Welcome Back to Rare Agora!</title>
+    <script
+      src="https://kit.fontawesome.com/491010d1fc.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f7f7f7;
+      }
+      .email-container {
+        max-width: 700px;
+        margin: 30px auto;
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .header {
+        padding: 40px 40px 0px 40px;
+      }
+      .header img {
+        object-fit: contain;
+      }
+      .content {
+        padding: 0px 40px;
+      }
+      .content .notify-text {
+        font-weight: bold;
+        font-size: 20px;
+      }
+      .content img {
+        width: 560px;
+        height: 280px;
+        object-fit: contain;
+      }
+
+      .content .title {
+        font-size: 24px;
+        font-weight: 600;
+      }
+      .content .description {
+        font-size: 16px;
+        font-weight: 400;
+        color: #3f3f46;
+      }
+      .label {
+        font-size: 16px;
+        color: #888;
+      }
+
+      .value {
+        font-size: 20px;
+      }
+
+      .currency {
+        font-size: 14px;
+        color: #888;
+      }
+
+      .divider {
+        margin: 0 4px;
+        color: #999;
+      }
+
+      .eth-value {
+        font-weight: 600;
+        font-size: 20px;
+      }
+
+      .vertical-divider {
+        width: 1px;
+        height: 30px;
+        background-color: #e0e0e0;
+        margin: 0px 20px;
+      }
+
+      .view-asset-btn {
+        padding: 16px;
+        border-radius: 8px;
+        background-color: #175675;
+        color: #fafafa;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 14px;
+        outline: none;
+        border: none;
+      }
+      .footer {
+        margin-top: 40px;
+        background-color: #102e41;
+        padding: 40px;
+        color: #fafafacc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="header">
+        <img
+          src="https://dev-asset-images-874t.s3.ap-south-1.amazonaws.com/uploads/rwa_logo.svg"
+          alt="Rare Agora"
+        />
+      </div>
+      <div class="content">
+        <p class="notify-text">You’ll be notified when this asset becomes live!
+          🔔</p>
+        <div style="width: 560px; height:280px;" >
+          <img  src="{{assetImage}}" width="100%" />
+        </div>
+        <div style="background-color: #F2FBF2; color: #1e4620; padding: 10px 16px; border-radius: 8px; font-size: 16px; margin-top: 36px; border: 1px solid #2A8F32;">
+         The value of this asset has {{growth}} by <strong  style="color:#2A8F32">{{growthPercent}}%</strong> since {{sinceYear}}.
+        </div>
+        <h3 class="title">{{name}}</h3>
+        <p class="description">{{description}}</p>
+        <table>
+          <tr>
+            <td>
+              <div class="token-price">
+            <div class="label">Price per token</div>
+            <div class="value">
+              <table >
+                <tr>
+                  <td><strong>${{assetPrice}}</strong></td>
+                  <td><span class="currency">USD</span></td>
+                  <td><span class="divider">⇄</span></td>
+                  <td><span class="eth-value">{{polPrice}}</span></td>
+                  <td><span class="currency">POL</span></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+            </td>
+            <td>
+              <div class="vertical-divider"></div>
+            </td>
+            <td>
+              <div class="subscribers">
+            <div class="label">Subscribers</div>
+            <div class="value"><strong>{{subscribers}}</strong></div>
+          </div>
+            </td>
+          </tr>
+        </table>
+        
+        <a href="{{assetLink}}">
+          <button class="view-asset-btn">View Asset</button>
+        </a>
+
+      </div>
+      <footer class="footer">
+        <div style="display: flex;">
+          <div
+            style="width: 40px; height: 40px; background-color: #184862; display: flex; justify-content: center; align-items: center; border-radius: 50%; margin-right: 10px"
+          ><i class="fa-brands fa-x-twitter"></i></div>
+          <div
+            style="width: 40px; height: 40px; background-color: #184862; display: flex; justify-content: center; align-items: center; border-radius: 50%"
+          ><i class="fa-brands fa-linkedin-in"></i></div>
+        </div>
+        <p style="font-size: 14px; line-height: 160%; margin-top: 24px">Please
+          do not reply to this email. You are receiving this email because you
+          have created an account with
+          <a
+            href="https://dev.rareagora.com/"
+            style="color: #50B7E0"
+          >RareAgora</a></p>
+        <div
+          style="padding: 0.3px; background-color: #184862; margin: 24px 0px"
+        ></div>
+        <p style="font-size: 14px; font-weight: 400; ">© Copyright 2025 RWA –
+          All Rights Reserved.</p>
+      </footer>
+    </div>
+  </body>
+</html>

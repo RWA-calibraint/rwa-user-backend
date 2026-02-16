@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 140023373109.dkr.ecr.ap-south-1.amazonaws.com
+
+  build:
+    commands:
+      - echo Changing directory to auth-service...
+      - cd apps/api-gateway
+      - echo Building the Docker image...
+      - docker build -t rwa-user-dev-apigateway .
+      - docker tag rwa-user-dev-apigateway:latest 140023373109.dkr.ecr.ap-south-1.amazonaws.com/rwa-user-dev-apigateway:latest
+      - cd ../../..  # Go back to the root directory
+
+  post_build:
+    commands:
+      - echo Pushing the Docker image to Amazon ECR...
+      - docker push 140023373109.dkr.ecr.ap-south-1.amazonaws.com/rwa-user-dev-apigateway:latest
+      - echo Writing image details to imagedefinitions.json...
+      - printf '[{"name":"rwa-dev-api-gateway-container","imageUri":"140023373109.dkr.ecr.ap-south-1.amazonaws.com/rwa-user-dev-apigateway:latest"}]' > imagedefinitions.json
+      - echo "Contents of imagedefinitions.json:"
+      - cat imagedefinitions.json
+      - echo "Moving imagedefinitions.json to root directory..."
+      - mv imagedefinitions.json $CODEBUILD_SRC_DIR/
+
+artifacts:
+  files:
+    - imagedefinitions.json

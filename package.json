@@ -1,0 +1,68 @@
+{
+  "name": "rwa-platform",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "npm@10.9.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "clean:build": "rm -rf ./apps/auth-service/dist && rm -rf ./apps/payment-service/dist && rm -rf ./apps/asset-service/dist && rm -rf ./apps/api-gateway/dist",
+    "dev:all": "turbo run dev",
+    "dev:auth-service": "turbo run dev --filter=@rwa/auth-service",
+    "dev:payment-service": "turbo run dev --filter=@rwa/payment-service",
+    "dev:asset-service": "turbo run dev --filter=@rwa/asset-service",
+    "dev:api-gateway": "turbo run dev --filter=@rwa/api-gateway",
+    "build": "npm run clean:build && turbo run build",
+    "start": "npm run build && turbo run start",
+    "lint": "eslint \"{apps,test}/**/*.ts\"",
+    "test": "turbo run test",
+    "format": "prettier --write \"**/*.{ts,md}\"",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/fs-extra": "^11.0.4",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "globals": "^16.5.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.0.0",
+    "turbo": "^2.3.4",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.55.0"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.1.1",
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/microservices": "^10.0.0",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/schedule": "^5.0.1",
+    "@nestjs/swagger": "^7.3.0",
+    "@nestjs/terminus": "^11.0.0",
+    "axios": "^1.9.0",
+    "class-validator": "^0.14.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "ioredis": "^5.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "reflect-metadata": "^0.2.1",
+    "sharp": "^0.34.1",
+    "ultra-unique-id": "^1.0.3"
+  }
+}
