@@ -1,12 +1,12 @@
 import { createReadStream } from "fs";
 import { basename, dirname, join } from "path";
+import { randomUUID } from "crypto";
 
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-import { v4 as uuid } from "uuid";
 
 @Injectable()
 export class S3Service {
@@ -29,7 +29,7 @@ export class S3Service {
       const rootPath = dirname(process.cwd());
       const fullPath = join(rootPath, "api-gateway", filePath.toString());
       const fileStream = createReadStream(fullPath);
-      const key = `uploads/${uuid()}-${basename(filePath.toString())}`;
+      const key = `uploads/${randomUUID()}-${basename(filePath.toString())}`;
       const upload = new Upload({
         client: this.s3Client,
         params: {

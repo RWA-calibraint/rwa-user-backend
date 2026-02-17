@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { InjectModel } from "@nestjs/mongoose";
 
 import { Model, UpdateWriteOpResult } from "mongoose";
@@ -19,9 +20,6 @@ export class EmailRepository {
     return this.emailModel.updateOne(
       { email: userDetails.email },
       userDetails,
-      {
-        new: true,
-      },
-    );
+    ) as any;
   }
 }

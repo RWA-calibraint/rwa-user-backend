@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { InjectModel } from "@nestjs/mongoose";
 
 import mongoose, {
@@ -24,9 +25,7 @@ export class UserRepository {
     return this.userModel.findById(id);
   }
   async update(userDetails: User): Promise<UpdateWriteOpResult> {
-    return this.userModel.updateOne({ email: userDetails.email }, userDetails, {
-      new: true,
-    });
+    return this.userModel.updateOne({ email: userDetails.email }, userDetails) as any;
   }
 
   async findOne(

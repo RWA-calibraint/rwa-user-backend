@@ -14,12 +14,18 @@
     "dev:asset-service": "turbo run dev --filter=@rwa/asset-service",
     "dev:api-gateway": "turbo run dev --filter=@rwa/api-gateway",
     "build": "npm run clean:build && turbo run build",
+    "build:all": "turbo run build",
+    "build:auth": "turbo run build --filter=@rwa/auth-service",
+    "build:payment": "turbo run build --filter=@rwa/payment-service",
+    "build:asset": "turbo run build --filter=@rwa/asset-service",
+    "build:gateway": "turbo run build --filter=@rwa/api-gateway",
     "start": "npm run build && turbo run start",
     "lint": "eslint \"{apps,test}/**/*.ts\"",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,md}\"",
     "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "deploy:all": "./deploy-all.sh"
   },
   "lint-staged": {
     "*.{js,ts}": [
