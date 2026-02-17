@@ -1,4 +1,4 @@
-import { pbkdf2Sync } from "crypto";
+import { pbkdf2Sync, randomUUID } from "crypto";
 
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
@@ -6,7 +6,6 @@ import { RpcException } from "@nestjs/microservices";
 
 import * as jwt from "jsonwebtoken";
 import * as generateUniqueId from "ultra-unique-id";
-import { v4 as uuidv4 } from "uuid";
 
 import {
   ConfirmForgotPasswordInterface,
@@ -114,7 +113,7 @@ export class AuthService {
   async createUser(signupDetails: SignupInterface): Promise<string> {
     try {
       const { UserSub: cognitoSubId } =
-        await this.cognitoService.signup({...signupDetails, userName: uuidv4()});
+        await this.cognitoService.signup({...signupDetails, userName: randomUUID()});
         console.log('==> Cognito Signup Result:', cognitoSubId);
       const userDbData: User = {  
         email: signupDetails.email,
