@@ -288,4 +288,53 @@ export class UserController {
       return constructErrorResponse(error);
     }
   }
+
+  @Post("didit/create-session")
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: "Create Didit verification session" })
+  @ApiResponse({ status: 200, description: "Session created successfully" })
+  async diditCreateSession(@Req() request) {
+    try {
+      const userId = request?.user?.result?._id;
+      if (!userId) {
+        throw new BadRequestException({ message: "User not found" });
+      }
+
+      const result = await firstValueFrom(
+        this.authClient.send(
+          MICRO_SERVICES.AUTH_SERVICE.MESSAGE_EVENT.DIDIT_CREATE_SESSION,
+          { userId },
+        ),
+      );
+      return constructSuccessResponse(result);
+    } catch (error) {
+      return constructErrorResponse(error);
+    }
+  }
+
+  @Get("didit/decision/:sessionId")
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: "Get Didit verification decision" })
+  @ApiResponse({ status: 200, description: "Decision retrieved successfully" })
+  async diditGetDecision(
+    @Req() request,
+    @Param("sessionId") sessionId: string,
+  ) {
+    try {
+      const userId = request?.user?.result?._id;
+      if (!userId) {
+        throw new BadRequestException({ message: "User not found" });
+      }
+
+      const result = await firstValueFrom(
+        this.authClient.send(
+          MICRO_SERVICES.AUTH_SERVICE.MESSAGE_EVENT.DIDIT_GET_DECISION,
+          { sessionId },
+        ),
+      );
+      return constructSuccessResponse(result);
+    } catch (error) {
+      return constructErrorResponse(error);
+    }
+  }
 }

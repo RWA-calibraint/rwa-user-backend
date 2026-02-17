@@ -62,6 +62,13 @@ export class PaymentsService {
 
         const calculatedAmount = assetDetails.price / assetDetails.tokens;
 
+        if (
+          !sellerDetails?.stripeAccountId &&
+          !assetDetails.isAdminAsset
+        ) {
+          throw new Error(ERROR_MESSAGES.RESPONSES.SELLER_STRIPE_NOT_CONNECTED);
+        }
+
         const { url } = await this.stripeService.createCheckoutSessionUrl({
           currency,
           assetDetails,
@@ -95,6 +102,13 @@ export class PaymentsService {
 
         const calculatedAmount =
           assetListingDetails.tokenPrice / assetListingDetails.tokens;
+
+        if (
+          !sellerDetails?.stripeAccountId &&
+          !assetDetails.isAdminAsset
+        ) {
+          throw new Error(ERROR_MESSAGES.RESPONSES.SELLER_STRIPE_NOT_CONNECTED);
+        }
 
         const { url } = await this.stripeService.createCheckoutSessionUrl({
           currency,

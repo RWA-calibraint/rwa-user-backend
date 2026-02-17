@@ -41,6 +41,7 @@ export const ERROR_MESSAGES = {
     BUYER_NOT_FOUND: "Buyer not found",
     ASSET_NOT_FOUND: "Asset not found",
     USER_NOT_FOUND: "User not found",
+    SELLER_STRIPE_NOT_CONNECTED: "Seller has not connected their Stripe account",
     STRIPE: {
       PAYMENT_NOT_COMPLETED: "Payment not completed yet",
       PAYMENT_NOT_FOUND: "Payment not found",

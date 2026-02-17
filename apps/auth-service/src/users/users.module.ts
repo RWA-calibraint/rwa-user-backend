@@ -8,6 +8,8 @@ import { UsersService } from "src/users/users.service";
 
 import { AadhaarKycService } from "./aadhaar-kyc.service";
 import { GridlinesKycService } from "./gridlines-kyc.service";
+import { KycaidKycService } from "./kycaid-kyc.service";
+import { DiditKycService } from "./didit-kyc.service";
 import { UserRepository } from "./repositories/user.repository";
 
 @Module({
@@ -15,7 +17,7 @@ import { UserRepository } from "./repositories/user.repository";
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
   controllers: [UsersController],
-  providers: [UsersService, AadhaarKycService, GridlinesKycService, UserRepository, SendGridServices],
-  exports: [UsersService, AadhaarKycService, GridlinesKycService, SendGridServices],
+  providers: [UsersService, AadhaarKycService, GridlinesKycService, KycaidKycService, DiditKycService, UserRepository, SendGridServices],
+  exports: [UsersService, AadhaarKycService, GridlinesKycService, KycaidKycService, DiditKycService, SendGridServices],
 })
 export class UsersModule {}

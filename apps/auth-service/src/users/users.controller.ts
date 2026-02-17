@@ -1,10 +1,10 @@
-import { Controller } from "@nestjs/common";
+import { Body, Controller, Headers, Post } from "@nestjs/common";
 import { MessagePattern } from "@nestjs/microservices";
 
 import { MESSAGES_EVENTS } from "src/shared-kernel/utils/constants/message-events";
 
-import { AadhaarKycService } from "./aadhaar-kyc.service";
-import { GridlinesKycService } from "./gridlines-kyc.service";
+import { KycaidKycService } from "./kycaid-kyc.service";
+import { DiditKycService } from "./didit-kyc.service";
 import { AadhaarGenerateOtpDto } from "./dto/aadhaar-generate-otp.dto";
 import { AadhaarVerifyOtpDto } from "./dto/aadhaar-verify-otp.dto";
 import { KycDto } from "./dto/kyc.dto";
@@ -14,8 +14,8 @@ import { UsersService } from "./users.service";
 export class UsersController {
   constructor(
     private readonly userService: UsersService,
-    private readonly aadhaarKycService: AadhaarKycService,
-    private readonly gridlinesKycService: GridlinesKycService,
+    private readonly kycaidKycService: KycaidKycService,
+    private readonly diditKycService: DiditKycService,
   ) {}
 
   @MessagePattern(MESSAGES_EVENTS.GET_USER_DETAIL)
@@ -59,7 +59,7 @@ export class UsersController {
 
   @MessagePattern(MESSAGES_EVENTS.AADHAAR_GENERATE_OTP)
   async aadhaarGenerateOtp(data: { aadhaarData: AadhaarGenerateOtpDto }) {
-    return this.aadhaarKycService.generateOtp(
+    return this.kycaidKycService.generateOtp(
       data.aadhaarData.aadhaarNumber,
       data.aadhaarData.reason,
     );
@@ -70,10 +70,33 @@ export class UsersController {
     userId: string;
     verifyData: AadhaarVerifyOtpDto;
   }) {
-    return this.aadhaarKycService.verifyOtp(
+    return this.kycaidKycService.verifyOtp(
       String(data.verifyData.referenceId),
       data.verifyData.otp,
       data.userId,
     );
+  }
+
+  @MessagePattern(MESSAGES_EVENTS.DIDIT_CREATE_SESSION)
+  async diditCreateSession(data: { userId: string }) {
+    return this.diditKycService.createSession(data.userId);
+  }
+
+  @MessagePattern(MESSAGES_EVENTS.DIDIT_GET_DECISION)
+  async diditGetDecision(data: { sessionId: string }) {
+    return this.diditKycService.getDecision(data.sessionId);
+  }
+
+  @MessagePattern("DIDIT_WEBHOOK")
+  async diditWebhook(data: { payload: any; signature: string }) {
+    return this.diditKycService.handleWebhook(data.payload, data.signature);
+  }
+
+  @Post("didit-webhook")
+  async diditWebhookHttp(
+    @Body() payload: any,
+    @Headers("x-signature") signature: string,
+  ) {
+    return this.diditKycService.handleWebhook(payload, signature);
   }
 }

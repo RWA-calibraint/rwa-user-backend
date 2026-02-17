@@ -1,10 +1,12 @@
 // TODO: Need to use front redirect url and cancel url, once frontend completed
+const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3004";
+
 export const STRIPE_URLS = {
   CHECKOUT: {
-    RETURN_URL: "http://localhost:3004",
-    REFRESH_URL: "https://www.google.com",
-    CANCEL_URL: "http://localhost:3004/orders?payment=failed",
-    SUCCESS_URL: "http://localhost:3004/orders?payment=success",
+    RETURN_URL: `${frontendUrl}/sell`,
+    REFRESH_URL: `${frontendUrl}/sell`,
+    CANCEL_URL: `${frontendUrl}/orders?payment=failed`,
+    SUCCESS_URL: `${frontendUrl}/orders?payment=success`,
   },
 };
 
